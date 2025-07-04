@@ -1,0 +1,138 @@
+{
+  "name": "Airtable to mail",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyMinute"
+            }
+          ]
+        },
+        "authentication": "airtableTokenApi",
+        "baseId": {
+          "__rl": true,
+          "value": "https://airtable.com/appRgeMKHSUaGZIFY/tbli1ejY9bqZSI4EM/viwz7vuWcxkvY2Cc1?blocks=hide",
+          "mode": "url"
+        },
+        "tableId": {
+          "__rl": true,
+          "value": "https://airtable.com/appRgeMKHSUaGZIFY/tbli1ejY9bqZSI4EM/viwz7vuWcxkvY2Cc1?blocks=hide",
+          "mode": "url"
+        },
+        "triggerField": "Order ID",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtableTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "f10aadc8-2f19-471e-bba0-3e4231215c0d",
+      "name": "Airtable Trigger",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "2PLBpZpUo6TbnWpM",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=You are responsible for customer orders. Your task is to collect incoming information about new orders and create a clear summary that will be sent via email to the team. The email should be signed with \"Customer Success Team\".\n\nHere are the details of the customer orders:\nOrder Number: {{ $json.fields['Order ID'] }}\nCustomer: {{ $json.fields['Customer Name'] }}\nProduct: {{ $json.fields.Product }}\nQuantity: {{ $json.fields.Quantity }}\nPrice: {{ $json.fields.Price }}\nDate: {{ $json.fields['Order Date'] }}\nStatus: {{ $json.fields.Status }}\n\nPlease provide the following output parameters:\nemail_subject\nemail_body\nmake a clean body with new lines if needed"
+            }
+          ]
+        },
+        "jsonOutput": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        220,
+        0
+      ],
+      "id": "d501b2c3-56f0-4b14-989a-165fe034db83",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "cHCSNBnwy3THoJ4i",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "yorick.cruse@gmail.com",
+        "subject": "={{ $json.message.content.email_subject }}",
+        "emailType": "text",
+        "message": "={{ $json.message.content.email_body }}",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        580,
+        0
+      ],
+      "id": "7797f17a-e219-423c-9e88-82837b6f97a4",
+      "name": "Send a message",
+      "webhookId": "b384560f-5348-40ec-8c3b-2e2179212cc2",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IVBsN8Bv3f9dbzb1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Airtable Trigger": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "fa941d33-35a4-4e70-a2f1-0557895134d5",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0ad1a48aad6ac888ca1b70b8d221936c2ca1bfe8a9dea5d9de5282a46ddffc3d"
+  },
+  "id": "X18rydsytpPioCWj",
+  "tags": []
+}
