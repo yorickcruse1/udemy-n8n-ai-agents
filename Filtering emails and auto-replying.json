@@ -1,0 +1,311 @@
+{
+  "name": "Filtering emails and auto-replying",
+  "nodes": [
+    {
+      "parameters": {
+        "pollTimes": {
+          "item": [
+            {
+              "mode": "everyHour"
+            }
+          ]
+        },
+        "filters": {}
+      },
+      "type": "n8n-nodes-base.gmailTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "d8d9ab34-4ba9-44e8-bedf-2516685ee5b4",
+      "name": "Gmail Trigger",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IVBsN8Bv3f9dbzb1",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c9e4b5cf-99ca-4a04-b1ff-0f0a7c7286fb",
+              "name": "email context",
+              "value": "=From: {{ $json.From }}\n\nSubject: {{ $json.Subject }}\n\nEmail body: {{ $json.snippet }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        0
+      ],
+      "id": "0fecefc6-977e-4b12-9834-911a7d5b0b20",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Your task is to determine whether an email requires me to prepare for an interview or not.  \n\nRespond with a JSON object containing the following fields:  \n- **hasInterview** Boolean be either true or false.\n- **reasoning** Explain your answer.  \n\nThink step by step about your response.\n\nThe output should be a JSON with the following format:\n{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"hasInterview\": {\n\t\t\t\"type\": \"boolean\"\n\t\t},\n\t\t\"reasoning\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}\n\n{{ $json['email context'] }}",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        440,
+        0
+      ],
+      "id": "21520900-6913-4e2a-b204-e8a07b057d3a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        440,
+        220
+      ],
+      "id": "9d78c44f-904c-41fa-80de-1f9f743db64a",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "cHCSNBnwy3THoJ4i",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "schemaType": "manual",
+        "inputSchema": "{\n\t\"type\": \"object\",\n\t\"properties\": {\n\t\t\"hasInterview\": {\n\t\t\t\"type\": \"boolean\"\n\t\t},\n\t\t\"reasoning\": {\n\t\t\t\"type\": \"string\"\n\t\t}\n\t}\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        600,
+        220
+      ],
+      "id": "c0540cfe-a297-46ea-b4d5-b4893f76070d",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "b05e7472-401e-4817-9091-fde7e6bc1270",
+              "leftValue": "={{ $json.output.hasInterview }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        800,
+        0
+      ],
+      "id": "2101ff9c-6fce-4dee-af13-3dd6ac4201d2",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        140
+      ],
+      "id": "137a6957-ef72-426b-9d08-19149aefb328",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4.1-nano",
+          "mode": "list",
+          "cachedResultName": "GPT-4.1-NANO"
+        },
+        "messages": {
+          "values": [
+            {
+              "content": "=Your task is to respond to prepare some relevant information about the company interview request and how to prepare for the position. You might need to use the original sender's email to determine the company.\n\n**Task:**  \nCarefully review the email context below and write a friendly and professional email.  Return only the **email body in HTML format**—do **not** include a header, only the body!  \nThe email should include details about the company and the sender.  \n\n**Conditions:**  \n\nThe company should be in the IT field.",
+              "role": "system"
+            },
+            {
+              "content": "=Email context: {{ $('Edit Fields').item.json['email context'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1000,
+        -100
+      ],
+      "id": "36d6cddc-92cb-4e2b-8a4d-dd93f098a942",
+      "name": "Message a model",
+      "credentials": {
+        "openAiApi": {
+          "id": "cHCSNBnwy3THoJ4i",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "yorick.cruse@proton.me",
+        "subject": "Agent recap",
+        "message": "={{ $json.message.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.1,
+      "position": [
+        1360,
+        -100
+      ],
+      "id": "15d1ad0a-936e-44b4-947f-149cdb23302c",
+      "name": "Send a message",
+      "webhookId": "490e1b05-f143-4896-b6df-ca8da5ac1301",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "IVBsN8Bv3f9dbzb1",
+          "name": "Gmail account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Gmail Trigger": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Message a model",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Message a model": {
+      "main": [
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "6d1269c6-7ee2-4d65-9440-a27458185750",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "0ad1a48aad6ac888ca1b70b8d221936c2ca1bfe8a9dea5d9de5282a46ddffc3d"
+  },
+  "id": "1wCLH3762h7Z5G4y",
+  "tags": []
+}
