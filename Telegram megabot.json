@@ -11,7 +11,7 @@
       "type": "n8n-nodes-base.telegramTrigger",
       "typeVersion": 1.2,
       "position": [
-        -672,
+        -768,
         160
       ],
       "id": "5596d534-c3a1-4d19-8bda-fe4b1bebd3fc",
@@ -35,7 +35,7 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2.1,
       "position": [
-        224,
+        432,
         -64
       ],
       "id": "d1a15d37-dd27-405c-be27-930afaf076a3",
@@ -54,7 +54,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        208,
+        416,
         144
       ],
       "id": "b91c4ce8-360b-4d8e-9f7b-3b568abe6417",
@@ -127,7 +127,7 @@
       "type": "n8n-nodes-base.switch",
       "typeVersion": 3.2,
       "position": [
-        -464,
+        -256,
         160
       ],
       "id": "8c3a258a-2e0d-4476-b24c-6c3e37928566",
@@ -150,7 +150,7 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        -192,
+        16,
         -64
       ],
       "id": "b82cc195-5ab4-4dc6-ba8b-b8b68d1e6bbe",
@@ -164,7 +164,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        -256,
+        -48,
         240
       ],
       "id": "67d5e001-1c50-4e57-b56b-ae52eb1a3955",
@@ -186,7 +186,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        -48,
+        160,
         240
       ],
       "id": "10309a6e-7a8c-4338-9e58-5247ab96326c",
@@ -207,7 +207,7 @@
       "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
       "typeVersion": 1.3,
       "position": [
-        352,
+        560,
         144
       ],
       "id": "b81a0766-e81d-4891-aa97-21b34d64ae5f",
@@ -224,7 +224,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        848,
+        1056,
         32
       ],
       "id": "595cac77-217a-4164-99b0-71c6faa9120e",
@@ -258,7 +258,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        480,
+        688,
         240
       ],
       "id": "35d44a09-d687-426f-844d-d14b7efd4c8b",
@@ -285,7 +285,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        576,
+        784,
         336
       ],
       "id": "88165511-a0bc-47fb-a38b-e1c59d35bc89",
@@ -312,7 +312,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        672,
+        880,
         432
       ],
       "id": "658ff181-6758-45e2-8e5b-8023e48a484d",
@@ -338,7 +338,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        608,
+        816,
         144
       ],
       "id": "623ad492-41a1-4907-889c-c37c0d792a29",
@@ -361,7 +361,7 @@
       "type": "@n8n/n8n-nodes-langchain.chainLlm",
       "typeVersion": 1.7,
       "position": [
-        736,
+        944,
         -208
       ],
       "id": "1bd4bf56-f203-43ac-8cd6-c766561619c5",
@@ -380,7 +380,7 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        736,
+        944,
         -80
       ],
       "id": "5c695eab-be03-469e-8e3e-9287d3065eff",
@@ -401,7 +401,7 @@
       "type": "@n8n/n8n-nodes-langchain.openAi",
       "typeVersion": 1.8,
       "position": [
-        1088,
+        1296,
         -208
       ],
       "id": "0c616c64-99e8-46dd-a337-c4936eb1eb1a",
@@ -423,7 +423,7 @@
       "type": "n8n-nodes-base.telegram",
       "typeVersion": 1.2,
       "position": [
-        1296,
+        1504,
         -208
       ],
       "id": "7afebb42-04ce-475e-a30e-846cd83ff4c9",
@@ -435,6 +435,49 @@
           "name": "Telegram account"
         }
       }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "3b92cc6f-8ba6-43a9-8e57-252eaf3f8559",
+              "leftValue": "={{  $json.message.chat.id }}",
+              "rightValue": "6321725556",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            },
+            {
+              "id": "0d18bda0-5c88-4108-90bb-abc7121660c7",
+              "leftValue": "={{  $json.message.from.username }}",
+              "rightValue": "wax88888",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -560,
+        160
+      ],
+      "id": "161212f2-a199-43b5-9de1-929502069145",
+      "name": "If"
     }
   ],
   "pinData": {},
@@ -443,7 +486,7 @@
       "main": [
         [
           {
-            "node": "Switch",
+            "node": "If",
             "type": "main",
             "index": 0
           }
@@ -615,13 +658,24 @@
           }
         ]
       ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
     }
   },
-  "active": true,
+  "active": false,
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "31386dbe-d8bb-490f-824e-05af1387392f",
+  "versionId": "182f286b-e398-40ad-9edc-9060628475f4",
   "meta": {
     "templateCredsSetupCompleted": true,
     "instanceId": "f493e44b15d7f23f6731586ad7b17f7ba01ef8032d92a57a26faa9fab98968c6"
