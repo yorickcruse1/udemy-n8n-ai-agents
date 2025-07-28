@@ -1,5 +1,5 @@
 {
-  "name": "n8n Workflow Builder wit Rag Option",
+  "name": "Workflow builder with RAG",
   "nodes": [
     {
       "parameters": {
@@ -8,10 +8,10 @@
       "type": "@n8n/n8n-nodes-langchain.chatTrigger",
       "typeVersion": 1.1,
       "position": [
-        1260,
-        620
+        0,
+        0
       ],
-      "id": "00ec06e2-59df-46c5-89ac-750683728a78",
+      "id": "845ccaba-ce4c-428a-8e12-e27e1ef82247",
       "name": "When chat message received",
       "webhookId": "a55c1b4f-1dd4-40e7-9a99-a89902e2f5a9"
     },
@@ -24,17 +24,11 @@
       "type": "n8n-nodes-base.n8n",
       "typeVersion": 1,
       "position": [
-        1780,
-        620
+        528,
+        0
       ],
-      "id": "572d4183-d1cc-4ab3-a7c9-d83324f5bf03",
-      "name": "n8n",
-      "credentials": {
-        "n8nApi": {
-          "id": "HALd9Yah88GGfKG2",
-          "name": "n8n account"
-        }
-      }
+      "id": "1e08c30f-c78b-442f-9f70-4c4c409aa46d",
+      "name": "n8n"
     },
     {
       "parameters": {
@@ -53,10 +47,10 @@
       "type": "n8n-nodes-base.set",
       "typeVersion": 3.4,
       "position": [
-        1940,
-        620
+        688,
+        0
       ],
-      "id": "27cbeb1f-affd-47dd-9403-e8e72da3851c",
+      "id": "e197f532-dd73-4f39-a6b4-63275444627b",
       "name": "Workflow Link"
     },
     {
@@ -68,10 +62,10 @@
       "type": "@n8n/n8n-nodes-langchain.agent",
       "typeVersion": 2,
       "position": [
-        1460,
-        620
+        208,
+        0
       ],
-      "id": "9c0e378e-7645-4395-b1d3-4214b359368d",
+      "id": "9fb5eff8-cc30-4604-8657-bf269ea51d35",
       "name": "n8n Builder"
     },
     {
@@ -91,17 +85,11 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatAnthropic",
       "typeVersion": 1.3,
       "position": [
-        1380,
-        840
+        128,
+        224
       ],
-      "id": "c3516b52-e10f-4174-9d51-a61b4a88e231",
-      "name": "Opus 4",
-      "credentials": {
-        "anthropicApi": {
-          "id": "k13BZIU1wGsQa59g",
-          "name": "Anthropic account"
-        }
-      }
+      "id": "b4d94434-91ab-4213-af00-6467248d3d0b",
+      "name": "Opus 4"
     },
     {
       "parameters": {
@@ -118,17 +106,11 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        1620,
-        860
+        368,
+        240
       ],
-      "id": "1de89faa-414d-4a06-9f14-1287888b8555",
-      "name": "Pinecone Vector Store",
-      "credentials": {
-        "pineconeApi": {
-          "id": "aPWUpNX7BdyhgYmE",
-          "name": "PineconeApi account 2"
-        }
-      }
+      "id": "2343b9d4-2fe6-4f84-a0e6-f89caf91e09f",
+      "name": "Pinecone Vector Store"
     },
     {
       "parameters": {
@@ -137,17 +119,11 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1560,
-        1000
+        304,
+        384
       ],
-      "id": "e6326fe8-2f4a-476e-96bd-d31538a673db",
-      "name": "Embeddings OpenAI",
-      "credentials": {
-        "openAiApi": {
-          "id": "mto8GpgTDXNCXksO",
-          "name": "YT Test"
-        }
-      }
+      "id": "81c566dc-6618-4806-a00d-d1ed79ee13fa",
+      "name": "Embeddings OpenAI"
     },
     {
       "parameters": {
@@ -166,17 +142,11 @@
       "type": "@n8n/n8n-nodes-langchain.vectorStorePinecone",
       "typeVersion": 1.3,
       "position": [
-        2380,
-        620
+        1120,
+        0
       ],
-      "id": "967a5e9c-e9ae-48a4-8bef-cdef633587a2",
-      "name": "Pinecone Vector Store1",
-      "credentials": {
-        "pineconeApi": {
-          "id": "aPWUpNX7BdyhgYmE",
-          "name": "PineconeApi account 2"
-        }
-      }
+      "id": "ad185705-2c5c-41cd-9092-71abe4c97a24",
+      "name": "Pinecone Vector Store1"
     },
     {
       "parameters": {
@@ -185,17 +155,11 @@
       "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
       "typeVersion": 1.2,
       "position": [
-        2360,
-        840
+        1104,
+        224
       ],
-      "id": "7f312f68-1e5a-41e2-a5a4-c65301edceb1",
-      "name": "Embeddings OpenAI1",
-      "credentials": {
-        "openAiApi": {
-          "id": "mto8GpgTDXNCXksO",
-          "name": "YT Test"
-        }
-      }
+      "id": "6f3854a1-b986-47e7-afd0-d6880e5f2969",
+      "name": "Embeddings OpenAI1"
     },
     {
       "parameters": {
@@ -204,10 +168,10 @@
       "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
       "typeVersion": 1.1,
       "position": [
-        2560,
-        820
+        1312,
+        208
       ],
-      "id": "91b45fff-900e-4642-b2b5-4f323a9858fa",
+      "id": "3b3b3eab-8ef2-4ee0-a7f6-5671c9e2bed9",
       "name": "Default Data Loader"
     },
     {
@@ -233,17 +197,11 @@
       "type": "n8n-nodes-base.googleDriveTrigger",
       "typeVersion": 1,
       "position": [
-        2200,
-        620
+        944,
+        0
       ],
-      "id": "4e22214e-4f3f-46b4-9cf5-1e2097cbb83c",
-      "name": "Google Drive Trigger",
-      "credentials": {
-        "googleDriveOAuth2Api": {
-          "id": "NPMu48icvj9dqoTB",
-          "name": "Google Drive account"
-        }
-      }
+      "id": "06aa6dfe-28fd-4ef3-991f-8b07a5182ce5",
+      "name": "Google Drive Trigger"
     }
   ],
   "pinData": {},
@@ -290,11 +248,6 @@
             "index": 0
           }
         ]
-      ]
-    },
-    "Pinecone Vector Store": {
-      "ai_tool": [
-        []
       ]
     },
     "Embeddings OpenAI": {
@@ -346,11 +299,10 @@
   "settings": {
     "executionOrder": "v1"
   },
-  "versionId": "d6fc6857-8aef-410b-a499-aca8e2056c73",
+  "versionId": "adc374d3-3754-4d80-87a6-4fb514997c9e",
   "meta": {
-    "templateCredsSetupCompleted": true,
-    "instanceId": "89d6b5241e3d0c6b62682a09a72213abeeffd34a6110f442c15fc0b560f12919"
+    "instanceId": "0ad1a48aad6ac888ca1b70b8d221936c2ca1bfe8a9dea5d9de5282a46ddffc3d"
   },
-  "id": "QMB6qBMROOE8nUY9",
+  "id": "oUoV6QMjTIwGrQSJ",
   "tags": []
 }
